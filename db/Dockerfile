@@ -1,0 +1,10 @@
+FROM postgres:16.2-alpine
+
+# ENV POSTGRES_USER=${POSTGRES_USER}
+# ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+# RUN postgresql -c 'CREATE DATABASE mydb;'
+
+EXPOSE 5432
+
+# CMD [ "postgres", "-p", "5432" ]

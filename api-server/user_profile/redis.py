@@ -1,15 +1,16 @@
 import redis
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()
+# load_dotenv()
 
 class RedisManager:
-    def __init__(self, host=os.environ.get('REDIS_HOST'), port=os.environ.get('REDIS_PORT'), db=0):
+    def __init__(self, host=os.environ.get('REDIS_HOST'), port=os.environ.get('REDIS_PORT'), password=os.environ.get('REDIS_PASSWORD'), db=0):
         self.host = host
         self.port = port
+        self.password = password
         self.db = db
-        self.redis_client = redis.Redis(host=self.host, port=self.port, db=self.db)
+        self.redis_client = redis.Redis(host=self.host, port=self.port, password=password, db=self.db)
 
     def set_redis_cache(self, key, value, expiry=None):
         self.redis_client.set(key, value, ex=expiry)

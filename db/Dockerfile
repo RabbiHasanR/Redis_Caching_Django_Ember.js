@@ -1,10 +1,10 @@
 FROM postgres:16.2-alpine
 
-ENV POSTGRES_USER testuser
-ENV POSTGRES_PASSWORD 12345
-ENV POSTGRES_DB testdb
+# ENV POSTGRES_USER testuser
+# ENV POSTGRES_PASSWORD 12345
+# ENV POSTGRES_DB mydb
 
-# COPY init.sql /docker-entrypoint-initdb.d/
+COPY init.sql /docker-entrypoint-initdb.d/
 
 EXPOSE 5432
 

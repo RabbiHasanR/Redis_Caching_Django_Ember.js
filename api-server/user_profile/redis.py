@@ -1,7 +1,11 @@
 import redis
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class RedisManager:
-    def __init__(self, host='localhost', port=6379, db=0):
+    def __init__(self, host=os.environ.get('REDIS_HOST'), port=os.environ.get('REDIS_PORT'), db=0):
         self.host = host
         self.port = port
         self.db = db
@@ -21,17 +25,17 @@ class RedisManager:
 
 
 # Example usage:
-redis_manager = RedisManager()
+# redis_manager = RedisManager()
 
 # Set a key-value pair
-redis_manager.set_redis_cache('my_key', 'my_value', expiry=3600)
+# redis_manager.set_redis_cache('my_key', 'my_value', expiry=3600)
 
 # Get the value associated with a key
-value = redis_manager.get_redis_cache('my_key')
-print(value.decode() if value else "Key not found")  # Decoding bytes to string
+# value = redis_manager.get_redis_cache('my_key')
+# print(value.decode() if value else "Key not found")  # Decoding bytes to string
 
 # Delete a key
-redis_manager.delete_redis_cache('my_key')
+# redis_manager.delete_redis_cache('my_key')
 
 # Publish a message to a Redis channel
 # num_subscribers = redis_manager.publish_redis('my_channel', 'Hello, subscribers!')

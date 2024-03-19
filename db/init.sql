@@ -1,5 +1,8 @@
--- Create database
-CREATE DATABASE mydb;
+-- Create a table example
+CREATE TABLE example (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
 
-CREATE USER testuser WITH PASSWORD '12345';
-GRANT ALL PRIVILEGES ON DATABASE mydb TO testuser;
+-- Insert initial data
+INSERT INTO example (name) VALUES ('John'), ('Alice'), ('Bob');

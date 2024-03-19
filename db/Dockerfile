@@ -1,14 +1,17 @@
 FROM postgres:16.2-alpine
 
-# ENV POSTGRES_USER testuser
-# ENV POSTGRES_PASSWORD 12345
-# ENV POSTGRES_DB mydb
+# Environment variables
+ENV POSTGRES_USER=testuser
+ENV POSTGRES_PASSWORD=12345
+ENV POSTGRES_DB=mydb
 
-COPY init.sql /docker-entrypoint-initdb.d/
+# Copy SQL initialization scripts
+# COPY init.sql /docker-entrypoint-initdb.d/
 
+# Expose PostgreSQL port
 EXPOSE 5432
 
-CMD [ "postgres", "-p", "5432" ]
+# CMD [ "postgres", "-p", "5432" ]
 
 
 # for above dockerfile container bash 

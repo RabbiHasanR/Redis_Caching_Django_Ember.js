@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  api-server:
+    container_name: 'api-server'
+    hostname: api
+    build: ./api-server/.
+    environment:
+      - PORT=8000
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PORT=${REDIS_PORT}
+      - REDIS_CHANNEL=${REDIS_CHANNEL}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_DATABASE=${POSTGRES_DATABASE}
+      - POSTGRES_USERNAME=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - '8000:8000'
+    networks:
+      - mynetwork
+    
+  
+  db:
+    container_name: 'postgres-db'
+    hostname: db
+    build: ./db/.
+    environment:
+      - POSTGRES_ROOT_PASSWORD=${POSTGRES_ROOT_PASSWORD}
+    # ports:
+    #   - '5432:5432'
+    networks:
+      - mynetwork
+  
+  redis:
+    container_name: "redis-service"
+    hostname: redis
+    image: "redis:7.2-alpine"
+    restart: always
+    command: redis-server --save 20 1 --loglevel warning --requirepass mypassword
+    # ports:
+    #   - '6379:6379'
+    networks:
+      - mynetwork

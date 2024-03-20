@@ -2,22 +2,22 @@ version: '3'
 
 services:
   api-server:
-    container_name: 'api-service'
+    container_name: api-service
     hostname: api
     build: ./api-server/.
     environment:
-      - PORT=8000
+      - PORT=${DJANGO_PORT}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_HOST=${REDIS_HOST}
-      - REDIS_PORT=${REDIS_HOST_PORT}
+      - REDIS_PORT=${REDIS_PORT}
       - REDIS_CHANNEL=${REDIS_CHANNEL}
       - POSTGRES_HOST=${POSTGRES_HOST}
       - POSTGRES_DATABASE=${POSTGRES_DATABASE}
       - POSTGRES_USERNAME=${POSTGRES_USERNAME}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_PORT=${POSTGRES_HOST_PORT}
+      - POSTGRES_PORT=${POSTGRES_PORT}
     ports:
-      - '4000:8000'
+      - "${DJANGO_HOST_PORT}:${DJANGO_PORT}"
     networks:
       - mynetwork
 
@@ -27,7 +27,7 @@ services:
     
   
   db:
-    container_name: 'postgres-db'
+    container_name: postgres-db
     hostname: db
     build: ./db/.
     environment:
@@ -35,18 +35,20 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DATABASE}
     ports:
-      - '${POSTGRES_HOST_PORT}:${POSTGRES_PORT}'
+      - "${POSTGRES_HOST_PORT}:${POSTGRES_PORT}"
+    volumes:
+      - ./db/pgdata:/var/lib/postgresql/data
     networks:
       - mynetwork
   
   redis:
-    container_name: "redis-service"
+    container_name: redis-service
     hostname: redis
-    image: "redis:7.2-alpine"
+    image: redis:7.2-alpine
     restart: always
     command: redis-server --save 20 1 --loglevel warning --requirepass ${REDIS_PASSWORD}
     ports:
-      - '${REDIS_HOST_PORT}:${REDIS_PORT}'
+      - "${REDIS_HOST_PORT}:${REDIS_PORT}"
     networks:
       - mynetwork
 

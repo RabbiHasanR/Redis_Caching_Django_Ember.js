@@ -1,6 +1,23 @@
 version: '3'
 
 services:
+
+  client-server:
+    container_name: client-service
+    hostname: client
+    build: ./client-app/.
+    environment:
+      - API_URL=${API_URL}
+    ports:
+      - ${CLIENT_HOST_PORT}:${CLIENT_PORT}
+    networks:
+      - mynetwork
+    depends_on:
+      - redis
+      - db
+      - api-server
+
+
   api-server:
     container_name: api-service
     hostname: api
